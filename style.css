@@ -1,0 +1,78 @@
+﻿/* Нулиране на стилове */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: #0f172a; /* тъмносиньо */
+    color: #f1f5f9;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Основна контейнерна структура */
+.content {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+/* Централна част */
+.main-section {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+    .main-section h1 {
+        font-size: 3.5em;
+        text-align: center;
+        color: #38bdf8; /* небесносин */
+        text-shadow: 2px 2px 6px rgba(0,0,0,0.6);
+    }
+
+/* Футър */
+.footer {
+    height: 50px;
+    background: #1e293b;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 25px;
+    font-size: 0.95em;
+    color: #94a3b8;
+}
+
+.footer-left {
+    font-weight: 500;
+}
+
+.footer-right {
+    display: flex;
+    gap: 10px;
+}
+
+.nav-btn {
+    padding: 6px 14px;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: 600;
+    background: #334155;
+    color: #e2e8f0;
+    transition: background 0.2s, transform 0.1s;
+}
+
+    .nav-btn:hover {
+        background: #475569;
+        transform: translateY(-2px);
+    }
+
+    .nav-btn.disabled {
+        opacity: 0.4;
+        pointer-events: none;
+    }
