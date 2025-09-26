@@ -29,10 +29,10 @@ body {
     justify-content: center;
 }
 
-    .main-section  h1 {
+    .main-section h1 {
         font-size: 4.5em;
         text-align: center;
-        color: #38bdf8; /* небесносин */
+        color: #10465e; /* небесносин */
         text-shadow: 2px 2px 6px rgba(0,0,0,0.6);
     }
 
@@ -84,7 +84,7 @@ body {
     .slide-content h1 {
         font-size: 4.5em;
         margin-bottom: 40px;
-        color: #38bdf8;
+        color: #10465e;
     }
 
 .requirements {
