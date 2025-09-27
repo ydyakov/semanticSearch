@@ -1,0 +1,162 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <script src="main.js" defer></script>
+    <title>Slide 4 - Working Example</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+        }
+
+        main {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+            padding: 40px;
+            text-align: center;
+        }
+
+        footer {
+            height: 40px;
+            background: #222;
+            color: #fff;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 15px;
+            font-size: 14px;
+        }
+
+        h1 {
+            font-size: 36px;
+            margin-bottom: 20px;
+        }
+
+        input {
+            padding: 10px;
+            font-size: 16px;
+            width: 60%;
+            max-width: 400px;
+            margin-bottom: 20px;
+        }
+
+        #vectorOutput {
+            margin-bottom: 30px;
+            font-family: monospace;
+            font-size: 16px;
+        }
+
+        table {
+            border-collapse: collapse;
+            width: 60%;
+            max-width: 600px;
+        }
+
+        td {
+            padding: 8px 12px;
+            border-bottom: 1px solid #ccc;
+            font-family: monospace;
+        }
+
+        tr.highlight {
+            background: #fffa8b;
+            font-weight: bold;
+        }
+
+        .nav-buttons button {
+            background: #555;
+            color: white;
+            border: none;
+            padding: 5px 12px;
+            margin-left: 5px;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+            .nav-buttons button:hover {
+                background: #777;
+            }
+    </style>
+</head>
+<body data-slide="4">
+    <main>
+        <h1 style="margin: 40px 0 60px">Working Example</h1>
+        <input id="inputText" type="text" placeholder="Type something and press Enter...">
+        <p id="vectorOutput">[Vector will appear here]</p>
+
+        <table id="wordsTable">
+            <tr><td>red</td><td>0.12, -0.45, 0.77, -0.88, 0.23, -0.34, 0.56, -0.12 ...</td></tr>
+            <tr><td>square</td><td>-0.22, 0.15, 0.67, -0.32, 0.11, 0.44, -0.50, 0.60 ...</td></tr>
+            <tr><td>yellow</td><td>0.89, -0.12, -0.45, 0.30, -0.78, 0.21, 0.14, -0.66 ...</td></tr>
+            <tr><td>blue</td><td>-0.34, 0.22, 0.50, -0.10, 0.66, -0.48, 0.77, -0.25 ...</td></tr>
+            <tr><td>circle</td><td>0.45, 0.55, -0.12, 0.08, 0.23, -0.31, 0.72, -0.44 ...</td></tr>
+            <tr><td>rectangle</td><td>-0.67, 0.33, 0.12, -0.22, 0.56, 0.10, -0.11, 0.41 ...</td></tr>
+        </table>
+    </main>
+
+    <footer>
+        <div>Yordan Dyakov</div>
+        <div class="nav-buttons">
+            <button onclick="location.href='slide3.html'">⬅</button>
+            <button onclick="location.href='slide5.html'">➡</button>
+        </div>
+    </footer>
+
+    <script>
+        function generateVector(text) {
+            // seed-like hash
+            let seed = 0;
+            for (let i = 0; i < text.length; i++) {
+                seed += text.charCodeAt(i) * (i + 1);
+            }
+            const vector = [];
+            for (let i = 0; i < 8; i++) {
+                seed = (seed * 9301 + 49297) % 233280;
+                const rand = seed / 233280;
+                vector.push((rand * 2 - 1).toFixed(2));
+            }
+            return vector.join(", ") + " ...";
+        }
+
+        const input = document.getElementById("inputText");
+        const vectorOutput = document.getElementById("vectorOutput");
+        const rows = document.querySelectorAll("#wordsTable tr");
+
+        input.addEventListener("keydown", function (e) {
+            if (e.key === "Enter") {
+                const text = input.value.trim().toLowerCase();
+                if (text) {
+                    vectorOutput.textContent = generateVector(text);
+                } else {
+                    vectorOutput.textContent = "[Vector will appear here]";
+                }
+
+                // highlight logic
+                rows.forEach(row => row.classList.remove("highlight"));
+                if (text === "color") {
+                    ["red", "yellow", "blue"].forEach(word => {
+                        rows.forEach(row => {
+                            if (row.cells[0].textContent === word) row.classList.add("highlight");
+                        });
+                    });
+                } else if (text === "shape") {
+                    ["square", "circle", "rectangle"].forEach(word => {
+                        rows.forEach(row => {
+                            if (row.cells[0].textContent === word) row.classList.add("highlight");
+                        });
+                    });
+                }
+            }
+        });
+    </script>
+</body>
+</html>

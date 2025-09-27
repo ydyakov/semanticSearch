@@ -7,7 +7,7 @@
 
 body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background: #c8d5f3; 
+    background: #c8d5f3;
     color: #f1f5f9;
     height: 100vh;
     display: flex;
@@ -111,5 +111,37 @@ body {
     .req-item p {
         font-size: 1.2em;
         font-weight: 600;
-        color: #f1f5f9;
+        color: #111539;
     }
+
+
+#embedding-input {
+    padding: 10px 15px;
+    font-size: 1.2em;
+    border: 1px solid white;
+    border-radius: 8px;
+    margin-bottom: 30px;
+    width: 60%;
+    max-width: 500px;
+    outline: none;
+}
+
+.image-container {
+    margin: -30px 0;
+}
+
+    .image-container img {
+        width: 580px;
+        filter: drop-shadow(2px 2px 6px rgba(0,0,0,0.5));
+    }
+
+.embedding-output {
+    font-family: monospace;
+    font-size: 1.1em;
+    color: #1a1c25;
+    margin-top: 20px;
+    max-width: 80%;
+    margin-left: auto;
+    margin-right: auto;
+    line-height: 1.6em;
+}
