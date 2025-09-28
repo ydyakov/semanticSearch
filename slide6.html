@@ -14,24 +14,37 @@
 
                 <div class="code-block">
                     <button class="copy-btn" onclick="copyCode('code1')">Copy</button>
-                    <pre id="code1">GET _plugins/_ml/models/_search
+                    <pre id="code1">GET _ingest/pipeline/</pre>
+                </div>
+
+                <div class="code-block">
+                    <button class="copy-btn" onclick="copyCode('code2')">Copy</button>
+                    <pre id="code2">PUT _ingest/pipeline/&lt;pipeline_name&gt;
 {
-   "_source" : ["_id", "name", "model_content_size_in_bytes", "model_format", "model_state"],
-   "query": {
-       "term": {
-           "model_state": "DEPLOYED"
-       }
-    }
+  "processors": [
+      {
+        "text_embedding": {
+          "model_id": "&lt;model_id&gt;",
+          "field_map": {
+            "description": "description-knn"
+          }
+        }
+      }
+    ]
 }</pre>
                 </div>
 
                 <div class="code-block">
                     <button class="copy-btn" onclick="copyCode('code2')">Copy</button>
-                    <pre id="code2">POST _plugins/_ml/models/&lt;model_id&gt;/_predict
+                    <pre id="code2">POST _ingest/pipeline/&lt;pipeline_name&gt;/_simulate
 {
-   "parameters": {
-       "input": "Some example text input"
-   }
+  "docs": [
+    {
+      "_source": {
+        "description": "Hide and seek takes an adorable"
+      }
+    }
+  ]
 }</pre>
                 </div>
 
