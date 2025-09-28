@@ -3,13 +3,10 @@
 
     //  + CTRL
     document.addEventListener("keydown", (e) => {
-        if (currentSlide == 1) {
-            return;
-        }
         if (e.ctrlKey && e.key === "ArrowRight") {
             window.location.href = `slide${currentSlide + 1}.html`;
         }
-        if (e.ctrlKey && e.key === "ArrowLeft") {
+        if (e.ctrlKey && e.key === "ArrowLeft" && currentSlide != 1) {
             window.location.href = `slide${currentSlide - 1}.html`;
         }
 
