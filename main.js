@@ -11,7 +11,7 @@
         }
 
         // Ctrl + N -> 
-        if (e.ctrlKey && /^[0-9]$/.test(e.key)) {
+        if (e.ctrlKey && e.altKey && /^[0-9]$/.test(e.key)) {
             const target = parseInt(e.key);
             window.location.href = `slide${target}.html`;
         }
