@@ -148,31 +148,90 @@ body {
 
 
 .code-block {
-  position: relative;
-  background: #1e1e1e;
-  color: #dcdcdc;
-  text-align: left;
-  padding: 15px;
-  border-radius: 8px;
-  margin-bottom: 25px;
-  font-family: monospace;
-  width: 100%;
- /* max-width: 700px;*/
-  overflow-x: auto;
+    position: relative;
+    background: #1e1e1e;
+    color: #dcdcdc;
+    text-align: left;
+    padding: 15px;
+    border-radius: 8px;
+    margin-bottom: 25px;
+    font-family: monospace;
+    width: 100%;
+    /* max-width: 700px;*/
+    overflow-x: auto;
 }
+
 .copy-btn {
-  position: absolute;
-  top: 8px;
-  right: 8px;
-  background: #444;
-  color: white;
-  border: none;
-  padding: 4px 10px;
-  font-size: 12px;
-  border-radius: 5px;
-  cursor: pointer;
-  transition: background 0.3s;
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    background: #444;
+    color: white;
+    border: none;
+    padding: 4px 10px;
+    font-size: 12px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background 0.3s;
 }
-.copy-btn:hover {
-  background: #666;
+
+    .copy-btn:hover {
+        background: #666;
+    }
+
+.compare-table {
+    border-collapse: collapse;
+    margin: 20px auto;
+    width: 90%;
+    max-width: 1600px;
+    text-align: left;
+    font-size: 16px;
 }
+
+    .compare-table th,
+    .compare-table td {
+        border: 1px solid #ccc;
+        padding: 10px 15px;
+    }
+
+    .compare-table th {
+        background-color: #2d2d2d;
+        color: #fff;
+    }
+
+    .compare-table tr {
+        color: #333;
+    }
+
+        .compare-table tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+
+        .compare-table tr:nth-child(odd) {
+            background-color: #fff;
+        }
+
+.note {
+    margin-top: 20px;
+    text-align: center;
+    font-style: italic;
+    color: #333;
+}
+
+.options-list.bullets {
+    margin: 30px 0;
+}
+
+    .options-list.bullets .option {
+        display: flex;
+        align-items: flex-start;
+        margin-bottom: 15px;
+        font-size: 20px;
+        color: #333;
+    }
+
+    .options-list.bullets .icon {
+        font-size: 24px;
+        margin-right: 12px;
+    }
+
