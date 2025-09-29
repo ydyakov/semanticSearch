@@ -1,0 +1,70 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Slide 7 - Vectorization</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="main.js" defer></script>
+</head>
+<body data-slide="6">
+    <div class="content">
+        <main class="main-section">
+            <div class="slide-content" style="min-width: 900px;">
+                <h1 style="margin-bottom: 120px; margin-top:-50px;">Vectorization examples</h1>
+
+                <div class="code-block">
+                    <button class="copy-btn" onclick="copyCode('code1')">Copy</button>
+                    <pre id="code1">get augeo-products-category-uat/_search
+{
+  "_source": ["name", "description"],
+  "query": {
+    "neural": {
+      "description-knn": {
+        "query_text": "哑光复古持色",
+        "model_id": "BOPQf5gBgJpqvqL6ZIKC",
+        "k": 5
+      }
+    }
+  }
+}
+
+
+
+POST augeo-products-category-uat/_update_by_query?pipeline=pipeline-knn-L12
+{
+  "max_docs": 1000,
+  "script": {
+    "source": "ctx._source.description = ctx._source.description",
+    "lang": "painless"
+  },
+  "query": {
+    "bool": {
+      "must": [
+        { "term": { "productMixID": 220 } }
+      ],
+      "must_not": [
+        { "exists": { "field": "description-knn" } }
+      ]
+    }
+  }
+}
+
+</pre>
+                </div>
+
+
+            </div>
+        </main>
+
+        <footer class="footer">
+            <div class="footer-left">
+                <span>Yordan Dyakov</span>
+            </div>
+            <div class="footer-right">
+                <a href="slide6.html" class="nav-btn">⬅</a>
+                <a href="slide8.html" class="nav-btn">➡</a>
+            </div>
+        </footer>
+    </div>
+</body>
+</html>
