@@ -16,7 +16,7 @@
                     <button class="copy-btn" onclick="copyCode('code1')">Copy</button>
                     <pre id="code1">GET _plugins/_ml/models/_search
 {
-   "_source" : ["_id", "name", "model_content_size_in_bytes", "model_format", "model_state"],
+   "_source" : ["_id", "name", "model_config.embedding_dimension", "model_content_size_in_bytes", "model_format", "model_state"],
    "query": {
        "term": {
            "model_state": "DEPLOYED"
