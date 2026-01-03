@@ -2,80 +2,36 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Slide 9 - Neural query</title>
+    <title>Slide 8 - Neural query</title>
     <link rel="stylesheet" href="style.css">
     <script src="main.js" defer></script>
 </head>
-<body data-slide="9">
+<body data-slide="8">
     <div class="content">
         <main class="main-section">
-            <div class="slide-content" style="min-width: 1200px;">
-                <h1 style="margin-bottom: 60px; margin-top:-50px;"">Text Embedding Models (Hugging Face)</h1>
+            <div class="slide-content" style="min-width: 900px;">
+                <h1 style="margin-bottom: 120px; margin-top:-90px;">Neural query</h1>
 
-                <table class="compare-table">
-                    <thead>
-                        <tr>
-                            <th>Model</th>
-                            <th style="min-width: 120px;">Vector Size</th>
-                            <th>Strengths</th>
-                            <th>Limitations</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td><code>sentence-transformers/all-MiniLM-L6-v2</code></td>
-                            <td>384</td>
-                            <td>Fast, lightweight, good general semantic similarity</td>
-                            <td>Lower accuracy on complex semantic tasks</td>
-                        </tr>
-                        <tr>
-                            <td><code>sentence-transformers/paraphrase-MiniLM-L12-v2</code></td>
-                            <td>384</td>
-                            <td>Good for semantic search, paraphrase detection</td>
-                            <td>Moderate speed</td>
-                        </tr>
-                        <tr>
-                            <td><code>sentence-transformers/all-mpnet-base-v2</code></td>
-                            <td>768</td>
-                            <td>High accuracy on semantic similarity tasks</td>
-                            <td>Heavier, slower than MiniLM</td>
-                        </tr>
-                        <tr>
-                            <td><code>sentence-transformers/multi-qa-MiniLM-L6-cos-v1</code></td>
-                            <td>384</td>
-                            <td>Optimized for QA retrieval tasks</td>
-                            <td>Narrower domain than general models</td>
-                        </tr>
-                        <tr>
-                            <td><code>sentence-transformers/all-distilroberta-v1</code></td>
-                            <td>768</td>
-                            <td>Balanced model with good general-purpose embeddings</td>
-                            <td>Not as lightweight as MiniLM</td>
-                        </tr>
-                        <tr>
-                            <td><code>sentence-transformers/distiluse-base-multilingual-cased-v1</code></td>
-                            <td>512</td>
-                            <td>Multilingual support (15+ languages), good for cross-language search</td>
-                            <td>Slightly slower than English-only models</td>
-                        </tr>
-                        <tr>
-                            <td><code>sentence-transformers/paraphrase-multilingual-mpnet-base-v2</code></td>
-                            <td>768</td>
-                            <td>Multilingual, strong performance across languages and tasks</td>
-                            <td>Large size, requires more resources</td>
-                        </tr>
-                        <tr>
-                            <td><code>sentence-transformers/MiniLM-L3-v2</code></td>
-                            <td>384</td>
-                            <td>Even smaller and faster variant, efficient on low-resource setups</td>
-                            <td>Lower semantic accuracy compared to L6/L12</td>
-                        </tr>
-                    </tbody>
-                </table>
+                <div class="code-block">
+                    <button class="copy-btn" onclick="copyCode('code1')">Copy</button>
+                    <pre id="code1">GET augeo-products-category-int-knn1/_search
+{
+  "_source": ["name", "description"],
+  "query": {
+    "neural": {
+      "description-knn": {
+        "query_text": "toys for 6 year old boys",
+        "model_id": "&lt;model_id&gt;",
+        "k": 5
+      }
+    }
+  }
+}
 
-                <p class="note">
-                    ⚡ Choosing the right embedding model depends on the trade-off between <b>accuracy</b>, <b>speed</b>, and <b>vector size</b>.
-                </p>
+</pre>
+                </div>
+
+
             </div>
         </main>
 

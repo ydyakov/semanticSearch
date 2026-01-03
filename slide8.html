@@ -2,29 +2,38 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Slide 8 - Neural query</title>
+    <title>Slide 7 - Vectorization</title>
     <link rel="stylesheet" href="style.css">
     <script src="main.js" defer></script>
 </head>
-<body data-slide="8">
+<body data-slide="7">
     <div class="content">
         <main class="main-section">
             <div class="slide-content" style="min-width: 900px;">
-                <h1 style="margin-bottom: 120px; margin-top:-90px;">Neural query</h1>
+                <h1 style="margin-bottom: 120px; margin-top:-50px;">Vectorization examples</h1>
 
                 <div class="code-block">
                     <button class="copy-btn" onclick="copyCode('code1')">Copy</button>
-                    <pre id="code1">GET augeo-products-category-int-knn1/_search
+                    <pre id="code1">GET augeo-products-category-uat/_search
+
+GET augeo-products-category-uat/_search
 {
-  "_source": ["name", "description"],
-  "query": {
-    "neural": {
-      "description-knn": {
-        "query_text": "toys for 6 year old boys",
-        "model_id": "&lt;model_id&gt;",
-        "k": 5
-      }
+  "_source": ["name", "Keyword" ,"description", "description-knn"],
+   "query": {
+      "term": { "_id": "&lt;id&gt;" } }
     }
+  }
+}
+
+POST augeo-products-category-uat/_update_by_query?pipeline=&lt;pipeline_name&gt;
+{
+  "max_docs": 1000,
+  "script": {
+    "source": "ctx._source.description = ctx._source.description",
+    "lang": "painless"
+  },
+  "query": {
+    "term": { "_id": "&lt;id&gt;" } 
   }
 }
 

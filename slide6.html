@@ -2,48 +2,35 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Slide 6 - Pipeline</title>
+    <title>Slide 5 - ML Models </title>
     <link rel="stylesheet" href="style.css">
     <script src="main.js" defer></script>
 </head>
-<body data-slide="6">
+<body data-slide="5">
     <div class="content">
         <main class="main-section">
-            <div class="slide-content" style="min-width: 900px;">
-                <h1 style="margin-bottom: 80px; margin-top:-50px;">Pipeline</h1>
+            <div class="slide-content">
+                <h1 style="margin-bottom: 120px; margin-top:-150px;">ML Models in OpenSearch</h1>
 
                 <div class="code-block">
                     <button class="copy-btn" onclick="copyCode('code1')">Copy</button>
-                    <pre id="code1">GET _ingest/pipeline/</pre>
-                </div>
-
-                <div class="code-block">
-                    <button class="copy-btn" onclick="copyCode('code2')">Copy</button>
-                    <pre id="code2">PUT _ingest/pipeline/&lt;pipeline_name&gt;
+                    <pre id="code1">GET _plugins/_ml/models/_search
 {
-   "processors": [
-      {
-         "text_embedding": {
-            "model_id": "&lt;model_id&gt;",
-            "field_map": {
-            "description": "description-knn"
-         }
+   "_source" : ["_id", "name", "model_config.embedding_dimension", "model_content_size_in_bytes", "model_format", "model_state"],
+   "query": {
+       "term": {
+           "model_state": "DEPLOYED"
        }
-     }
-   ]
+    }
 }</pre>
                 </div>
 
                 <div class="code-block">
-                    <button class="copy-btn" onclick="copyCode('code3')">Copy</button>
-                    <pre id="code3">POST _ingest/pipeline/&lt;pipeline_name&gt;/_simulate
+                    <button class="copy-btn" onclick="copyCode('code2')">Copy</button>
+                    <pre id="code2">POST _plugins/_ml/models/&lt;model_id&gt;/_predict
 {
-    "docs": [
-        {
-            "_source": {
-                "description": "Hide and seek takes an adorable"
-            }
-        }
+    "text_docs": [
+        "Hide and seek takes an adorable twist"
     ]
 }</pre>
                 </div>
@@ -57,7 +44,7 @@
             </div>
             <div class="footer-right">
                 <a href="slide5.html" class="nav-btn">⬅</a>
-                <a href="slide7.html" class="nav-btn">➡</a>
+                <a href="slide6.html" class="nav-btn">➡</a>
             </div>
         </footer>
     </div>
