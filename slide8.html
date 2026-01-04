@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Slide 7 - Vectorization</title>
+    <title>Slide 8 - Vectorization</title>
     <link rel="stylesheet" href="style.css">
     <script src="main.js" defer></script>
 </head>
@@ -14,26 +14,28 @@
 
                 <div class="code-block">
                     <button class="copy-btn" onclick="copyCode('code1')">Copy</button>
-                    <pre id="code1">GET augeo-products-category-uat/_search
+                    <pre id="code1">GET knn-demo/_search
 
-GET augeo-products-category-uat/_search
+GET knn-demo/_search
 {
-  "_source": ["name", "Keyword" ,"description", "description-knn"],
-   "query": {
-      "term": { "_id": "&lt;id&gt;" } }
+   "_source": ["name", "Keyword" ,"description", "description-knn"],
+   "query": { 
+      "exists": {
+        "field": "description-knn"} 
+      }
     }
   }
 }
 
-POST augeo-products-category-uat/_update_by_query?pipeline=&lt;pipeline_name&gt;
+POST knn-demo/_update_by_query?pipeline=pipeline-demo
 {
-  "max_docs": 1000,
+  "max_docs": 20,
   "script": {
     "source": "ctx._source.description = ctx._source.description",
     "lang": "painless"
   },
   "query": {
-    "term": { "_id": "&lt;id&gt;" } 
+    "match_all": {}
   }
 }
 

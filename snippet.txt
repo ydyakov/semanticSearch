@@ -1,0 +1,32 @@
+POST knn-demo/_delete_by_query
+{
+  "query": {
+    "match_all": {}
+  }
+}
+
+POST _reindex
+{
+  "source": {
+    "index": "augeo-products-uat",
+    "size": 10000,
+    "query": {
+      "term": {
+        "productMixID": 220
+      }
+    }
+  },
+  "dest": {
+    "index": "knn-demo"
+  },
+  "script": {
+    "source": """
+      ctx._source = [
+        'name': ctx._source.name,
+        'Keyword': ctx._source.Keyword,
+        'description': ctx._source.description
+      ]
+    """,
+    "lang": "painless"
+  }
+}
