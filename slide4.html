@@ -142,13 +142,13 @@
 
                 // highlight logic
                 rows.forEach(row => row.classList.remove("highlight"));
-                if (text === "color") {
+                if (text === "color" || text === "цвят") {
                     ["red", "yellow", "blue"].forEach(word => {
                         rows.forEach(row => {
                             if (row.cells[0].textContent === word) row.classList.add("highlight");
                         });
                     });
-                } else if (text === "shape") {
+                } else if (text === "shape" || text === "форма") {
                     ["square", "circle", "rectangle"].forEach(word => {
                         rows.forEach(row => {
                             if (row.cells[0].textContent === word) row.classList.add("highlight");
