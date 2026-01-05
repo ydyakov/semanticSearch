@@ -2,80 +2,52 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Slide 10 - Neural query</title>
+    <title>Slide 10 - КNN </title>
     <link rel="stylesheet" href="style.css">
-    <script src="main.js" defer></script>
+    <script type="importmap">
+        {
+          "imports": {
+            "three": "https://cdn.jsdelivr.net/npm/three@0.180.0/build/three.module.js",
+            "csg": "https://cdn.jsdelivr.net/gh/looeee/threejs-csg@main/src/CSG/CSG.js"
+          }
+        }
+    </script>
+    <style type="text/css">
+        #scene-container {
+            width: 100%;
+            height: 100%;
+        }
+
+        html, body {
+            height: 100%;
+            margin: 0;
+        }
+
+        .content {
+            height: 100%;
+            width: 100%;
+        }
+
+        .main-section {
+            height: calc(100% - 40px); /* footer height */
+            width: 100%;
+        }
+
+        .slide-content {
+            height: 100%;
+            width: 100%;
+        }
+    </style>
+    <!--<script src="main.js" defer></script>-->
 </head>
 <body data-slide="10">
+
     <div class="content">
         <main class="main-section">
-            <div class="slide-content" style="min-width: 1200px;">
-                <h1 style="margin-bottom: 60px; margin-top:-50px;"">Text Embedding Models (Hugging Face)</h1>
+            <div class="slide-content">
+                <div id="scene-container"></div>
 
-                <table class="compare-table">
-                    <thead>
-                        <tr>
-                            <th>Model</th>
-                            <th style="min-width: 120px;">Vector Size</th>
-                            <th>Strengths</th>
-                            <th>Limitations</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td><code>sentence-transformers/all-MiniLM-L6-v2</code></td>
-                            <td>384</td>
-                            <td>Fast, lightweight, good general semantic similarity</td>
-                            <td>Lower accuracy on complex semantic tasks</td>
-                        </tr>
-                        <tr>
-                            <td><code>sentence-transformers/paraphrase-MiniLM-L12-v2</code></td>
-                            <td>384</td>
-                            <td>Good for semantic search, paraphrase detection</td>
-                            <td>Moderate speed</td>
-                        </tr>
-                        <tr>
-                            <td><code>sentence-transformers/all-mpnet-base-v2</code></td>
-                            <td>768</td>
-                            <td>High accuracy on semantic similarity tasks</td>
-                            <td>Heavier, slower than MiniLM</td>
-                        </tr>
-                        <tr>
-                            <td><code>sentence-transformers/multi-qa-MiniLM-L6-cos-v1</code></td>
-                            <td>384</td>
-                            <td>Optimized for QA retrieval tasks</td>
-                            <td>Narrower domain than general models</td>
-                        </tr>
-                        <tr>
-                            <td><code>sentence-transformers/all-distilroberta-v1</code></td>
-                            <td>768</td>
-                            <td>Balanced model with good general-purpose embeddings</td>
-                            <td>Not as lightweight as MiniLM</td>
-                        </tr>
-                        <tr>
-                            <td><code>sentence-transformers/distiluse-base-multilingual-cased-v1</code></td>
-                            <td>512</td>
-                            <td>Multilingual support (15+ languages), good for cross-language search</td>
-                            <td>Slightly slower than English-only models</td>
-                        </tr>
-                        <tr>
-                            <td><code>sentence-transformers/paraphrase-multilingual-mpnet-base-v2</code></td>
-                            <td>768</td>
-                            <td>Multilingual, strong performance across languages and tasks</td>
-                            <td>Large size, requires more resources</td>
-                        </tr>
-                        <tr>
-                            <td><code>sentence-transformers/MiniLM-L3-v2</code></td>
-                            <td>384</td>
-                            <td>Even smaller and faster variant, efficient on low-resource setups</td>
-                            <td>Lower semantic accuracy compared to L6/L12</td>
-                        </tr>
-                    </tbody>
-                </table>
 
-                <p class="note">
-                    ⚡ Choosing the right embedding model depends on the trade-off between <b>accuracy</b>, <b>speed</b>, and <b>vector size</b>.
-                </p>
             </div>
         </main>
 
@@ -89,5 +61,163 @@
             </div>
         </footer>
     </div>
+
+    <script type="module">
+        import * as THREE from "three";
+
+        const container = document.getElementById("scene-container");
+
+        /* ================= Renderer ================= */
+        const renderer = new THREE.WebGLRenderer({ antialias: true });
+        renderer.setSize(container.clientWidth, container.clientHeight);
+        renderer.setPixelRatio(window.devicePixelRatio);
+        container.appendChild(renderer.domElement);
+
+        /* ================= Scene & Camera ================= */
+        const scene = new THREE.Scene();
+        scene.background = new THREE.Color(0x0e0e0e);
+
+        const camera = new THREE.PerspectiveCamera(
+            60,
+            container.clientWidth / container.clientHeight,
+            0.1,
+            1000
+        );
+        camera.position.set(0, 0, 14);
+
+        /* ================= Lights ================= */
+        scene.add(new THREE.AmbientLight(0xffffff, 0.8));
+        const dir = new THREE.DirectionalLight(0xffffff, 0.6);
+        dir.position.set(5, 5, 5);
+        scene.add(dir);
+
+        /* ================= Helpers ================= */
+        function createSphere(pos, color, size = 0.25) {
+            const geo = new THREE.SphereGeometry(size, 16, 16);
+            const mat = new THREE.MeshStandardMaterial({ color });
+            const mesh = new THREE.Mesh(geo, mat);
+            mesh.position.copy(pos);
+            scene.add(mesh);
+            return mesh;
+        }
+
+        function createLine(from, to, color, width = 1) {
+            const geo = new THREE.BufferGeometry().setFromPoints([from, to]);
+            const mat = new THREE.LineBasicMaterial({ color, linewidth: width });
+            const line = new THREE.Line(geo, mat);
+            scene.add(line);
+        }
+
+        function textSprite(text) {
+            const canvas = document.createElement("canvas");
+            const ctx = canvas.getContext("2d");
+            canvas.width = 256;
+            canvas.height = 64;
+
+            ctx.fillStyle = "white";
+            ctx.font = "26px Arial";
+            ctx.textAlign = "center";
+            ctx.textBaseline = "middle";
+            ctx.fillText(text, 128, 32);
+
+            const tex = new THREE.CanvasTexture(canvas);
+            const mat = new THREE.SpriteMaterial({ map: tex });
+            const sprite = new THREE.Sprite(mat);
+            sprite.scale.set(2, 0.5, 1);
+            return sprite;
+        }
+
+        /* ================= Query ================= */
+        const queryPos = new THREE.Vector3(0, 0, 0);
+        createSphere(queryPos, 0xffffff, 0.35);
+
+        const queryLabel = textSprite("Query vector");
+        queryLabel.position.set(0, -0.8, 0);
+        scene.add(queryLabel);
+
+        /* ================= num_candidates ================= */
+        const NUM_CANDIDATES = 8;
+        const candidates = [];
+
+        for (let i = 0; i < NUM_CANDIDATES; i++) {
+            const angle = (i / NUM_CANDIDATES) * Math.PI * 2;
+            const radius = 6 + Math.random() * 0.8;
+
+            const pos = new THREE.Vector3(
+                Math.cos(angle) * radius,
+                (Math.random() - 0.5) * 1.5,
+                Math.sin(angle) * radius
+            );
+
+            createSphere(pos, 0x00ccff, 0.25);
+            createLine(queryPos, pos, 0x00ccff);
+
+            const label = textSprite(`candidate ${i + 1}`);
+            label.position.copy(pos.clone().multiplyScalar(1.08));
+            scene.add(label);
+
+            candidates.push(pos);
+        }
+
+        /* ================= k nearest ================= */
+        const K = 5;
+
+        for (let i = 0; i < K; i++) {
+            const angle = (i / K) * Math.PI * 2;
+            const radius = 3.5 + Math.random() * 0.4;
+
+            const pos = new THREE.Vector3(
+                Math.cos(angle) * radius,
+                (Math.random() - 0.5) * 0.8,
+                Math.sin(angle) * radius
+            );
+
+            createSphere(pos, 0xffcc00, 0.3);
+            createLine(queryPos, pos, 0xffcc00);
+
+            const cos = (0.9 - i * 0.03).toFixed(2);
+            const label = textSprite(`result #${i + 1} (cos=${cos})`);
+            label.position.copy(pos.clone().multiplyScalar(1.12));
+            scene.add(label);
+        }
+
+        /* ================= Mouse rotation ================= */
+        let dragging = false;
+        let px = 0, py = 0;
+
+        container.addEventListener("mousedown", e => {
+            dragging = true;
+            px = e.clientX;
+            py = e.clientY;
+        });
+        window.addEventListener("mouseup", () => dragging = false);
+
+        window.addEventListener("mousemove", e => {
+            if (!dragging) return;
+            const dx = e.clientX - px;
+            const dy = e.clientY - py;
+            px = e.clientX;
+            py = e.clientY;
+            scene.rotation.y += dx * 0.005;
+            scene.rotation.x += dy * 0.005;
+        });
+
+        /* ================= Zoom ================= */
+        container.addEventListener("wheel", e => {
+            camera.position.z += e.deltaY * 0.01;
+            camera.position.z = THREE.MathUtils.clamp(camera.position.z, 6, 30);
+        });
+
+        /* ================= Animate ================= */
+        function animate() {
+            requestAnimationFrame(animate);
+            renderer.render(scene, camera);
+        }
+        animate();
+    </script>
+
+
+
+
 </body>
 </html>
