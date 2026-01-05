@@ -30,3 +30,30 @@ POST _reindex
     "lang": "painless"
   }
 }
+
+
+
+-----
+
+PUT _cluster/settings
+{
+   "persistent":{
+     "plugins.ml_commons.only_run_on_ml_node": false
+   }
+}
+#1
+POST /_plugins/_ml/models/_upload
+{
+    "name": "huggingface/sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2",
+    "version": "1.0.1",
+    "model_format": "TORCH_SCRIPT"
+}
+
+#2 
+GET /_plugins/_ml/tasks/task-id
+
+#3
+POST /_plugins/_ml/models/model-id/_load
+
+#4 
+GET /_plugins/_ml/tasks/task-id
