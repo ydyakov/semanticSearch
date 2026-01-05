@@ -3,6 +3,11 @@
 
     //  + CTRL
     document.addEventListener("keydown", (e) => {
+
+        if (e.shiftKey) {
+            copyCode("codeX");
+        }
+
         if (e.ctrlKey && e.key === "ArrowRight") {
             window.location.href = `slide${currentSlide + 1}.html`;
         }

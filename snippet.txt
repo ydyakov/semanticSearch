@@ -41,7 +41,7 @@ PUT _cluster/settings
      "plugins.ml_commons.only_run_on_ml_node": false
    }
 }
-#1
+
 POST /_plugins/_ml/models/_upload
 {
     "name": "huggingface/sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2",
@@ -49,11 +49,11 @@ POST /_plugins/_ml/models/_upload
     "model_format": "TORCH_SCRIPT"
 }
 
-#2 
+ 
 GET /_plugins/_ml/tasks/task-id
 
-#3
+
 POST /_plugins/_ml/models/model-id/_load
 
-#4 
+ 
 GET /_plugins/_ml/tasks/task-id
